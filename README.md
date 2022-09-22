@@ -18,7 +18,7 @@ According to the project&#39;s scope, there are several medium and low severity 
 - depositAuction() : this Function is not checking if the user has deposited its BNB or not.
 - claimTokens() : reentrancy is not handled.
 
-## ## x Error (  `severity`  )
+## x Error (  `severity`  )
 
 Severity assigning:
 - high : depositAuction() function is not checking if the user has deposited its BNB or not this will lead to fund shortages in case of auction failure and fund stealing in case of success the deposit amount of BNB must be checked at the time of function call.
