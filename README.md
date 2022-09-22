@@ -30,6 +30,7 @@ Severity assigning:
 owner privileges : none
 
 #### Code snippet
+![alt text](https://ibb.co/CzLjhcL)//https://ibb.co/CzLjhcL
 
 
 ## Conclusion
