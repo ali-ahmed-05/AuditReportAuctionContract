@@ -30,13 +30,57 @@ Severity assigning:
 owner privileges : none
 
 #### Code snippet
-> constructor(address _offeringToken, uint256 _startTime, uint256 _endTime) 
+
+```
+constructor(address _offeringToken, uint256 _startTime, uint256 _endTime) 
     {
         offeringToken = _offeringToken;
         startTime = _startTime;
         endTime = _endTime;
     }
+```
 
 
+```
+function refundAll() external {
+        require(isClosed, "Auction not closed");
+        require(!isSuccess, "Should distribute tokens");
+
+        for (uint256 i = 0; i < addressList.length; i++) {
+            UserInfo storage user = userInfo[addressList[i]];
+            if(user.bnbAmount != 0){
+                payable(addressList[i]).transfer(user.bnbAmount);
+                user.bnbAmount = 0;
+            }
+            if(user.usdtAmount != 0){
+                IERC20(USDT_TOKEN).transfer(addressList[i], user.usdtAmount);
+                user.usdtAmount = 0;
+            }            
+        }
+    }
+```
+```
+function claimTokens() external {
+```
+
+```
+function depositAuction(uint256 _amount, bool _isUSDT) external payable {
+        checkConditions(_amount);
+        UserInfo storage user = userInfo[msg.sender];
+        if (user.bnbAmount == 0 && user.usdtAmount == 0) { // add new user to the list
+            addressList.push(msg.sender);
+        }
+
+        if (_isUSDT) {
+            IERC20(USDT_TOKEN).transferFrom(msg.sender, address(this), _amount);
+            totalUSDT += _amount;
+            user.usdtAmount += _amount;
+        } else {
+            totalBNB += _amount;
+            user.bnbAmount += _amount;
+        }
+    }
+```
+    
 ## Conclusion
 The above mentioned security concerns must be handled properly if not the funds of the contract are venerable to fund steal and reentrancy attacks and also fund collection functionality must be handled otherwise contract is not holding funds.
