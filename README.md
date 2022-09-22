@@ -30,7 +30,12 @@ Severity assigning:
 owner privileges : none
 
 #### Code snippet
-![alt text](https://ibb.co/CzLjhcL)//https://ibb.co/CzLjhcL
+> constructor(address _offeringToken, uint256 _startTime, uint256 _endTime) 
+    {
+        offeringToken = _offeringToken;
+        startTime = _startTime;
+        endTime = _endTime;
+    }
 
 
 ## Conclusion
